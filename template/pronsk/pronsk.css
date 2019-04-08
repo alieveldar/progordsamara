@@ -1,0 +1,48 @@
+#ProHead .menu{
+	background: #0097AA;
+}
+
+ul#MenuUl-pronsk {
+	width: 100%;
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+	height: 40px;
+	line-height: 40px;
+	font-size: 12px;
+}
+
+ul#MenuUl-pronsk li {
+	margin: 0;
+	padding: 0;
+	float: left;
+	display: inline;
+	list-style: none;
+	position: relative;
+	height: 40px;
+}
+ul#MenuUl-pronsk a{
+	padding: 0 18px 0 0;
+	margin: 0;
+	float: none !important;
+	float: left;
+	display: block;
+	color: #fff;
+	text-decoration: underline;
+	height: auto !important;
+	height: 1%;
+}
+/*#ProHead .menu a{*/
+	/*color: #0097AA;*/
+/*}*/
+
+#UserAuth-Enter,
+#BottomBox .Menu{
+	background: #0097AA;
+}
+.dater b{
+	color:#0097AA;
+}
+a:hover{
+	color: #0097AA;
+}

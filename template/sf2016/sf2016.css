@@ -1,0 +1,15 @@
+@font-face { font-family:museo; src:url("museo.eot"); src:url("museo.eot?#iefix") format("embedded-opentype"), url("museo.woff") format("woff"), url("museo.ttf") format("truetype"); }
+@font-face { font-family:bebas; src:url("bebas.eot"); src:url("bebas.eot?#iefix") format("embedded-opentype"), url("bebas.woff") format("woff"), url("bebas.ttf") format("truetype"); }
+
+html, body { position:relative; width:100%; height:100%; font-size:12px; line-height:16px; font-family:museo; }
+body { background:url(headbg.jpg) center 60px no-repeat; }
+H2 { font:24px/30px bebas !important; color:#007cbb !important; margin:0 0 5px 0; padding:0; font-weight:normal !important; }
+
+.headspace { overflow:hidden; width:100%; height:310px; }
+.context { width:940px; margin:0 auto 50px auto; box-shadow:0 0 50px rgba(0,0,0,0.4); overflow:hidden; }
+.pretext { width:220px; height:370px; overflow:hidden; padding:30px 60px 0 60px; float:left; background:#FFF; }
+.tables { width:520px; height:360px; overflow:hidden; padding:40px 40px 0 40px; float:right; background:url(table.jpg) center center; color:#FFF; } 
+.table { width:510px; overflow:hidden; overflow-y:scroll; height:310px; padding-right:10px; }
+.news { width:880px; min-height:400px; overflow:hidden; padding:40px 0 0 60px; background:url(news.jpg) top center no-repeat; }
+.bomb { width:880px; height:620px; overflow:hidden; padding:40px 0 0 60px; background:url(bomb.jpg) top center no-repeat; }
+.project { font:40px/60px bebas !important; color:#007cbb !important; text-align:center; }

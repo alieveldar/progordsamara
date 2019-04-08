@@ -1,0 +1,13 @@
+User-agent: *
+Allow: 
+/
+Crawl-delay: 5
+
+Disallow: /stroygazservis-i-samarastroy-otzyvy-o-5-kachestvah-sotrudnikov
+Disallow: /admin
+
+Disallow: /404
+
+Host: progorodsamara.ru
+
+Sitemap: http://progorodsamara.ru/sitemap.xml

@@ -1,0 +1,156 @@
+h3 {
+    font: 36px/40px bebas !important;
+    color: #007cbb !important;
+    margin: 0 0 5px 0;
+    padding: 0;
+    font-weight: bold !important;
+}
+
+cl {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    clear: both;
+}
+
+.news .items {
+    width: 700px;
+    overflow: hidden;
+}
+
+.news .item {
+    width: 220px;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 5px;
+}
+
+.news .bitem {
+    margin-bottom: 10px;
+}
+
+.news .item:nth-of-type(3n+3) {
+    margin-right: 0px;
+}
+
+.news .data {
+    font-size: 14px;
+}
+
+.news .name, .news .name a {
+    font: 24px/30px bebas;
+    color: #007cbb;
+    text-decoration: none !important;
+}
+
+.news .text {
+    padding-top: 10px;
+}
+
+.news .bitem .data {
+    font-weight: bold;
+}
+
+.news .bitem .name, .news .bitem .name a {
+    font: 32px/40px bebas;
+}
+
+.tables, .tables h2 {
+    color: #FFF !important;
+}
+
+.tables p {
+    margin: 0;
+    padding: 0;
+}
+
+.tables, .tables table, .tables td {
+    border-collapse: collapse;
+    border: none !important;
+    padding: 5px;
+    margin: 0;
+}
+
+.tables td {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.tables table {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+}
+
+.tables td:nth-of-type(2) {
+    text-align: left;
+    width: 99%;
+}
+
+.tables td:nth-of-type(1), .tables td:nth-of-type(3), .tables td:nth-of-type(4), .tables td:nth-of-type(5), .tables td:nth-of-type(6), .tables td:nth-of-type(7), .tables td:nth-of-type(8) {
+    width: 1%;
+}
+
+.tables tr:hover {
+    background: #007cbb;
+}
+
+.tables tr {
+    font-weight: bold;
+}
+
+.tables tr:nth-of-type(1) {
+    font-weight: normal !important;
+}
+
+.bomb h2 {
+    font: 36px/40px bebas !important;
+    color: #FFFFFF !important;
+    margin-bottom: 10px;
+}
+
+.bomb .boots {
+    width: 240px;
+    float: left;
+    height: 80px;
+    margin-right: 15px;
+}
+
+.bomb .boots:nth-of-type(3n+1) {
+    margin-left: 100px;
+}
+
+.bomb .numb {
+    float: left;
+    font: 50px/52px bebas !important;
+    color: #FFF !important;
+    margin-right: 5px;
+    width: 18px;
+    margin-top: -7px;
+}
+
+.bomb .pics {
+    float: left;
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+}
+
+.bomb .pics img {
+    width: 100%;
+    height: 100%;
+}
+
+.bomb .name {
+    float: left;
+    font: 22px/27px bebas;
+    color: #FFF;
+    width: 115px;
+    margin-top: -3px;
+}
+
+.bomb b {
+    color: #FFF;
+    font: 16px/20px museo;
+    font-weight: bold;
+}
