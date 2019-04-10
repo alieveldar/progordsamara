@@ -22,8 +22,8 @@ if ($GLOBAL["sitekey"]==1 && $GLOBAL["database"]==1) {
       DB("INSERT INTO `_lentalog` (`link`, `id`, `uid`, `data`, `ip`, `text`) VALUES ('".$alias."', '".$last."', '".$_SESSION['userid']."', '".time()."', '".$_SERVER['REMOTE_ADDR']."', 'Создание #".$last.": ".str_replace("'", '&#039;', $P["dname"])."')");
 
       if($P["comrs"] != null || $P["scomrs"] != null) {
-        if($sdata2 != null && $P["autoon"] == 1) $life_date = $sdata2 + ($P['life_days'] + 1) * 24 * 60 * 60;
-        else $life_date = $sdata1 + ($P['life_days'] + 1) * 24 * 60 * 60;
+        if($sdata2 != null && $P["autoon"] == 1) $life_date = $sdata2 + $P['life_days'] * 24 * 60 * 60;
+        else $life_date = $sdata1 + $P['life_days'] * 24 * 60 * 60;
         if($life_date != null)
           DB("INSERT INTO `advert_life` (`news_id`, `data`, `module`) VALUES ('".$last."', '".$life_date."', '".$alias."_lenta')");
       }

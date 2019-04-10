@@ -1,7 +1,6 @@
 <?
 ### НАСТРОЙКИ САЙТА
 if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
-
 // РАЗДЕЛ
     $data = DB(
       "SELECT `id`,`shortname`,`link`, `sets` FROM `_pages` WHERE (`link`='".$alias."') LIMIT 1"
@@ -91,8 +90,8 @@ if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
 
             if($P["autoon"] == 1 && $sdata2 != null)
             {
-                $life_date = $sdata2 + ($P['life_days'] + 1) * 24 * 60 * 60;
-            } else { $life_date = $sdata1 + ($P['life_days'] + 1) * 24 * 60 * 60; }
+                $life_date = $sdata2 + $P['life_days'] * 25 * 60 * 60;
+            } else { $life_date = $sdata1 + $P['life_days'] * 25 * 60 * 60; }
 
             if ($advert_life["total"] == 0 && ($P["comrs"] != null || $P["scomrs"] != null))
             {
@@ -200,8 +199,8 @@ if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
 
             if($node["astat"] == 1 && $node["adata"] != null)
             {
-                $advert_life_items["data"] = ($advert_life_items["data"] - $node["adata"]) / 60 / 60 / 24 - 1;
-            } else { $advert_life_items["data"] = ($advert_life_items["data"] - $node["data"]) / 60 / 60 / 24 - 1; }
+                $advert_life_items["data"] = ($advert_life_items["data"] - $node["adata"]) / 60 / 60 / 24;
+            } else { $advert_life_items["data"] = ($advert_life_items["data"] - $node["data"]) / 60 / 60 / 24 ; }
 
             if ($advert_life_items["data"] == 1) {
                 $a_l1 = "selected";
