@@ -1,0 +1,23 @@
+@font-face { font-family:Anna; src:url("anna.ttf"); } @font-face { font-family:Anna; src:url("anna.eot"); }
+@font-face { font-family:Din; src:url("dinpro.ttf"); } @font-face { font-family:Serif; src:url("dinpro.eot"); }
+
+* { outline:none !important; } body { font:18px/22px Din; color:#000; } .mys { width:990px; margin: 0 auto; position: relative; }
+.left { float:left; width:640px; } .right { float:right; position:relative; width:350px; background: #FFF; margin-top:-50px; z-index: 300; } .cap { font:36px/40px Anna; color:#000; }
+#ToUp { display: none !important; }
+.top { padding:10px 20px; overflow: hidden; } .t1 { width:560px; float:left; text-align: right; overflow: hidden; font:60px/66px Anna; color:#1ea6b0;  } .t2 { float: right; overflow: hidden; } .t2 img { margin:15px 5px; } 
+
+.pic { position: relative; z-index: 10; width:990px; height:590px; } .pic img { position: relative; z-index: 20; }
+.pic .info { position:absolute; z-index:100; right:0px; top:70px; width: 520px; height:330px; border-bottom:5px solid #FFF; border-top:5px solid #FFF; border-left:5px solid #FFF; background: rgba(15,141,152,0.6); color:#FFF; font-size: 26px; line-height: 34px; padding-left:30px; padding-top:30px; }
+.pic .info b { float:left; font-weight:normal; font-style: normal; font:110px/120px Anna; } .pic .info i { float:left; font-weight:normal; font-style: normal; font:36px/56px Anna; }
+.pr { overflow:hidden; margin-bottom: 30px; } .pr img { float:left;  border:none; } .green { height: 10px; background: #17beca; }
+.pic2 { position: relative; z-index: 10; width:640px; height:517px; } .pic2 img { position: relative; z-index: 20; }
+.pic2 .info { position:absolute; z-index:100; left:0px; top:20px; width: 640px; height:500px; color:#000; font-size: 24px; line-height: 30px; text-align: center; font-weight: bold; }
+.out { text-align: center; padding:50px 0; } .out b { font:22px/28px Din; font-weight: bold; }
+
+.nm { background:#f7a77b; font-size: 44px; line-height:50px; padding:5px 25px; margin-top:7px; overflow: hidden; color:#FFF; font-weight: bold; }
+.right { box-shadow:-5px 0px 5px #333; -webkit-box-shadow:-5px 0px 5px #333; -moz-box-shadow:-5px 0px 5px #333; }
+.right .z { padding:10px; margin-bottom:25px; } .right .z img { width:100%; height: auto; margin-bottom:10px; border:none; }
+
+#works { width:640px !important; }
+.iworks { width:640px !important; } .iworks img { border:none; width:100%; height:auto; } .iworks td { vertical-align:top; text-align:center; }
+.sc { height:2400px; overflow-y:scroll; overflow-x:hidden; }
