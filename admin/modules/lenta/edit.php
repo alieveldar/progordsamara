@@ -210,7 +210,7 @@ if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
             } elseif ($advert_life_items["data"] == 10) {
                 $a_l3 = "selected";
             }
-echo $advert_life_items["data"];
+            
             $utags = explode(",", trim($node["tags"], ","));
             $site = array();
             $data = DB(

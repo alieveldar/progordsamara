@@ -177,7 +177,7 @@ function CENTER()
         ) - 1 * 24 * 60 * 60)."' && `[table]`.`promo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
     $endq = "ORDER BY `data` DESC";
     $data = getNewsFromLentas($q, $endq);
-    echo $data["total"];
+
     for ($i = 0; $i < $data["total"]; $i++) {
         @mysql_data_seek($data["result"], $i);
         $ar = @mysql_fetch_array($data["result"]);
@@ -430,7 +430,7 @@ function RIGHT()
         ) - 5 * 24 * 60 * 60)."' && `[table]`.`promo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
     $endq = "ORDER BY `data` DESC LIMIT 6";
     $data = getNewsFromLentas($q, $endq);
-    echo $data["total"];
+
     $list = array();
     $cnt = 1;
     if ((int)$data["total"] > 0) {
