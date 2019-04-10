@@ -1,6 +1,7 @@
 <?
 ### НАСТРОЙКИ САЙТА
 if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
+
 // РАЗДЕЛ
     $data = DB(
       "SELECT `id`,`shortname`,`link`, `sets` FROM `_pages` WHERE (`link`='".$alias."') LIMIT 1"
@@ -90,8 +91,8 @@ if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
 
             if($P["autoon"] == 1 && $sdata2 != null)
             {
-                $life_date = $sdata2 + $P['life_days'] * 25 * 60 * 60;
-            } else { $life_date = $sdata1 + $P['life_days'] * 25 * 60 * 60; }
+                $life_date = $sdata2 + ($P['life_days']) * 24 * 60 * 60;
+            } else { $life_date = $sdata1 + ($P['life_days']) * 24 * 60 * 60; }
 
             if ($advert_life["total"] == 0 && ($P["comrs"] != null || $P["scomrs"] != null))
             {
@@ -209,7 +210,7 @@ if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
             } elseif ($advert_life_items["data"] == 10) {
                 $a_l3 = "selected";
             }
-
+echo $advert_life_items["data"];
             $utags = explode(",", trim($node["tags"], ","));
             $site = array();
             $data = DB(
@@ -253,14 +254,14 @@ if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
                     $AdminText = '<h2>Редактирование: &laquo'.$node["name"].'&raquo;</h2>'.$_SESSION["Msg"]."<form action='".$_SERVER["REQUEST_URI"]."' enctype='multipart/form-data' method='post'>";
                     $AdminText .= "<div class='RoundText'><table>".'<tr class="TRLine0"><td style="width:22%;"></td><td style="width:78%;"></td></tr>
 
-                    <tr class="TRLine0"><td class="VarText">Заголовок материала<star>*</star></td><td class="LongInput">	<input name="dname" id="dname" type="text" value=\''.$node["name"].'\' maxlength="90" style="width:500px; float:left;">
-                    <input id="dcount" type="text" title="Осталось символов" style="width:40px; float:right; text-align:center;" value="" readonly>	</td><tr>
+                    <tr class="TRLine0"><td class="VarText">Заголовок материала<star>*</star></td><td class="LongInput">    <input name="dname" id="dname" type="text" value=\''.$node["name"].'\' maxlength="90" style="width:500px; float:left;">
+                    <input id="dcount" type="text" title="Осталось символов" style="width:40px; float:right; text-align:center;" value="" readonly> </td><tr>
 
                     <tr class="TRLine1"><td class="VarText">Категория</td><td class="LongInput"><div class="sdiv"><select name="site">'.GetSelected(
                         $site,
                         $node["cat"]
                         ).'</select></div></td><tr>
-                    <tr class="TRLine0"><td class="VarName"></td><td><a href="javascript:void(0);" onclick="ShowSets();" id="ShowSets">Показать дополнительные настройки</a></td><tr>	
+                    <tr class="TRLine0"><td class="VarName"></td><td><a href="javascript:void(0);" onclick="ShowSets();" id="ShowSets">Показать дополнительные настройки</a></td><tr>   
                     <tr class="TRLine0 ShowSets"><td class="VarName">Автор материала</td><td class="LongInput"><div class="sdiv"><select name="authid">'.GetSelected(
                         $usr,
                         $node["uid"]
@@ -272,7 +273,7 @@ if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
                     <tr class="TRLine0 ShowSets"><td class="VarName">Цензор материала</td><td class="LongInput"><input name="cens" type="text" value=\''.$node["cens"].'\'></td><tr>
                     <tr class="TRLine1 ShowSets"><td class="VarName">Источник материала</td><td class="LongInput"><input name="realinfo" type="text" value=\''.$node["realinfo"].'\'></td><tr>
                     <tr class="TRLine0 ShowSets"><td class="VarName">Комментарии</td><td class="LongInput">
-                    <div class="sdiv"><select name="comms"><option value="0" '.$c1.'>Чтение и добавление</option><option value="1" '.$c2.'>Только чтение</option><option value="2" '.$c3.'>Запретить комментарии</option></select></div></td><tr>	
+                    <div class="sdiv"><select name="comms"><option value="0" '.$c1.'>Чтение и добавление</option><option value="1" '.$c2.'>Только чтение</option><option value="2" '.$c3.'>Запретить комментарии</option></select></div></td><tr>   
                     <tr class="TRLine1 ShowSets"><td class="VarName">Дата создания</td><td class="DateInput">'.GetDataSet(
                         $node["data"],
                         ""
@@ -300,7 +301,7 @@ if ($GLOBAL["sitekey"] == 1 && $GLOBAL["database"] == 1) {
                     <tr class='TRLine0'>
                     <td width='1%'><input name='comrs' id='comrs' type='checkbox' value='1' $chk2></td><td width='20%'>Коммерческая новость</td>
                     <td width='1%'><input name='scomrs' id='scomrs' type='checkbox' value='1' $chk11></td><td width='20%'>VIP Коммерческая новость</td>
-                    <td width='1%'><input name='spec' id='spec' type='checkbox' value='1' $chk4></td><td width='20%'>Отправить PUSH уведомлением</td>		
+                    <td width='1%'><input name='spec' id='spec' type='checkbox' value='1' $chk4></td><td width='20%'>Отправить PUSH уведомлением</td>       
                     </tr>
                     <tr class='TRLine1'>
                     <td width='1%'><input name='yarss' id='yarss' type='checkbox' value='1' $chk5></td><td width='20%'>Отправить в <b>Яндекс RSS</b></td>
