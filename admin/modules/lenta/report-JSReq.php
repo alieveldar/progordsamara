@@ -25,7 +25,7 @@ if ($_SESSION['userrole']>=2) {
 			@mysql_data_seek($data["result"], $i); $ar=@mysql_fetch_array($data["result"]); 
 			foreach ($GLOBAL['AutoPicPaths'] as $path=>$size) { @unlink($ROOT."/userfiles/".$path."/".$ar['pic']); }
 		}
-		 DB("DELETE FROM `".$table."` WHERE (`id` IN (".$items."))");
+		DB("DELETE FROM `".$table."` WHERE (`id` IN (".$items."))");
 	}
 	
 	// операции =========================================================

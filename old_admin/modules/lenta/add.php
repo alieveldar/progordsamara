@@ -20,7 +20,9 @@ if ($GLOBAL["sitekey"]==1 && $GLOBAL["database"]==1) {
 				
 		$_SESSION["Msg"]="<div class='SuccessDiv'>Новая публикация успешно создана!</div>"; $data=DB($q); $last=DBL(); DB("UPDATE `".$alias."_lenta` SET `rate`='".$last."' WHERE  (id='".$last."')");
 		DB("INSERT INTO `_lentalog` (`link`, `id`, `uid`, `data`, `ip`, `text`) VALUES ('".$alias."', '".$last."', '".$_SESSION['userid']."', '".time()."', '".$_SERVER['REMOTE_ADDR']."', 'Создание #".$last.": ".str_replace("'", '&#039;', $P["dname"])."')");
-		@header("location: ?cat=".$raz["link"]."_edit&id=".$last); exit();
+        DB("INSERT INTO `advert_life` (`news_id`, `days`, `module`) VALUES ('".$last."', '".$P['life_days']."', '".$alias."')");
+
+        @header("location: ?cat=".$raz["link"]."_edit&id=".$last); exit();
 	}
 // ВЫВОД ПОЛЕЙ И ФОРМ
 
@@ -47,8 +49,19 @@ if ($GLOBAL["sitekey"]==1 && $GLOBAL["database"]==1) {
 	<tr class="TRLine0 ShowSets"><td class="VarName">Комментарии</td><td class="LongInput"><div class="sdiv"><select name="comms"><option value="0">Чтение и добавление</option><option value="1">Только чтение</option><option value="2">Запретить комментарии</option></select></div></td><tr>	
 	<tr class="TRLine1 ShowSets"><td class="VarName">Дата создания</td><td class="DateInput">'.GetDataSet().'</td><tr>
 	<tr class="TRLine0 ShowSets"><td class="VarName">Автопубликация</td><td class="DateInput">'.GetDataSet(0, 1).' включить таймер: <input type="checkbox" name="autoon" id="autoon" value="1"></td><tr>
-	'."</table></div>";
+	<tr class="TRLine1 ShowSets"><td class="VarName">Дата создания</td><td class="DateInput">'.GetDataSet().'</td><tr>
+	<tr class="TRLine0 ShowSets"><td class="VarName">Время жизни коммерции</td><td class="LongInput">
 	
+	<select size="3" multiple name="life_days">
+    <option disabled>Выберите количество дней</option>
+    <option value="1">1 день</option>
+    <option value="5">5 дней</option>
+    <option selected value="10">10 дней</option>
+   </select>
+	
+</td><tr>
+	'."</table></div>";
+
 	### Экспорт материала
 	$AdminText.="<h2>Отображение и экспорт материала</h2><div class='RoundText TagsList'><table>
 	<tr class='TRLine0'>

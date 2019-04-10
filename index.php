@@ -2,7 +2,7 @@
 	session_start(); $HardCacheFile=""; $HardCacheTime=900; 
 	if (!$_SESSION["full"]) { $_SESSION["full"]=false; }
 	if (!$_SESSION["mobile"] || $_SESSION["mobile"]=="") { $_SESSION["mobile"]="auto"; } mb_internal_encoding("UTF-8");
-	
+
 	if (!preg_match('/^m\./', $_SERVER['HTTP_HOST']) && !$_SESSION["full"] && !preg_match('/live/', $_SERVER['REQUEST_URI']) && !preg_match('/^live\./', $_SERVER['HTTP_HOST']) && !stripos($_SERVER['HTTP_HOST'], 'nsk')) {
 		$iphone = mb_strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
 		$android = mb_strpos($_SERVER['HTTP_USER_AGENT'],"Android");
@@ -27,8 +27,6 @@
 		$_SESSION['full'] = true;
 	}
 	if(preg_match('/^m\./', $_SERVER['HTTP_HOST']) && !stripos($_SERVER['HTTP_HOST'], 'nsk')) { unset($_SESSION["full"]); require ("modules/mobile.MainModule.php"); } else { require ("modules/MainModule.php"); }
-
-
 	
 ### Жесткий кэш ### Для неавторизованных ### hardcache ### hardcache### hardcache### hardcache### hardcache### hardcache### hardcache### hardcache### hardcache
 function HardCacheSite() { global $HardCacheFile, $HardCacheTime;

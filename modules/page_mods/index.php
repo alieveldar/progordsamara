@@ -71,11 +71,11 @@ function LEFT()
     $cnt = 1;
     $ban10 = 1;
 
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`tavto`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`redak`!=1 && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) && `[table]`.`data`<'".(time(
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`tavto`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`redak`!=1 && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) && `[table]`.`data`<'".(time(
         ) - 5 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
         ) - 7 * 24 * 60 * 60)."' [used]
 	AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_both <> 1 AND commerce_column_pronsk_both <> 1))";
-	if(isset($_GET['debug'])) $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`tavto`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`redak`!=1 && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) && `[table]`.`data`<'".(time(
+	if(isset($_GET['debug'])) $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`tavto`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`redak`!=1 && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) && `[table]`.`data`<'".(time(
         ) - 5 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
         ) + 7 * 24 * 60 * 60)."' [used]
 	AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_both <> 1 AND commerce_column_pronsk_both <> 1))";
@@ -148,10 +148,12 @@ function CENTER()
     $ban6 = 1;
 
     /*Surikat*/
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`, `[table]`.`pic`,`[table]`.`data`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`>'".(time(
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`, `[table]`.`pic`,`[table]`.`data`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`>'".(time(
         ) - 1 * 24 * 60 * 60)."' && `[table]`.`spromo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
+
     $endq = "ORDER BY `data` DESC LIMIT 1";
     $data = getNewsFromLentas($q, $endq);
+
     if ($data["total"] == 1) {
         @mysql_data_seek($data["result"], 0);
         $ar = @mysql_fetch_array($data["result"]);
@@ -171,10 +173,11 @@ function CENTER()
     }
 
     /*PodSurikat*/
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`>'".(time(
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`>'".(time(
         ) - 1 * 24 * 60 * 60)."' && `[table]`.`promo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
     $endq = "ORDER BY `data` DESC";
     $data = getNewsFromLentas($q, $endq);
+    echo $data["total"];
     for ($i = 0; $i < $data["total"]; $i++) {
         @mysql_data_seek($data["result"], $i);
         $ar = @mysql_fetch_array($data["result"]);
@@ -193,7 +196,7 @@ function CENTER()
     }
 
     /*Staruhi*/
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`<'".(time(
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`<'".(time(
         ) - 7 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
         ) - 11 * 24 * 60 * 60)."' && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
     $endq = "ORDER BY `data` DESC LIMIT 30";
@@ -346,7 +349,7 @@ function RIGHT()
     // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     /*PodSurikat 1 */
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`>'".(time(
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module`  '[table]' && `[table]`.`stat`='1' && `[table]`.`data`>'".(time(
         ) - 6 * 24 * 60 * 60)."' && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) [used])";
     $endq = "ORDER BY `data` DESC LIMIT 6";
     $data = getNewsFromLentas($q, $endq);
@@ -422,11 +425,12 @@ function RIGHT()
     $text .= $C10."<div class='banner3' id='Banner-10-".$ban10."'></div>";
     $ban10 = $ban10 + 2;
 
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`data`, '1' as `tavto`, `[table]`.`lid`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`<'".(time(
-        ) - 2 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`data`, '1' as `tavto`, `[table]`.`lid`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`<'".(time(
+        ) - 1 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
         ) - 5 * 24 * 60 * 60)."' && `[table]`.`promo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
-    $endq = "ORDER BY `data` DESC LIMIT 6, 6";
+    $endq = "ORDER BY `data` DESC LIMIT 6";
     $data = getNewsFromLentas($q, $endq);
+    echo $data["total"];
     $list = array();
     $cnt = 1;
     if ((int)$data["total"] > 0) {

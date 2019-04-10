@@ -13,6 +13,5 @@ if ($_SESSION['userrole']>1) {
 	
 	DB("DELETE FROM `".$table."` WHERE (`id`=".$item.")");
 	$result["content"]="ok"; $GLOBALS['_RESULT']	= $result;
-
 }
 ?>

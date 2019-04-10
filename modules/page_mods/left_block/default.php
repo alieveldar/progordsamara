@@ -38,7 +38,7 @@ function CreateLeftBlock()
         $text .= $ar["name"]."</a>".$C.Dater($ar)."</div>".$C20; endfor;
 
     /*OLD PROMO*/
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`<'".(time(
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`<'".(time(
         ) - 6 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
         ) - 11 * 24 * 60 * 60)."' && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) [used])";
     $endq = "ORDER BY `data` DESC";
@@ -60,7 +60,7 @@ function CreateLeftBlock()
     }
 
     /*NEWS*/
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' [used])";
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && (`[table]`.`promo`!=1 && `[table]`.`spromo`!=1) [used])";
     $endq = "ORDER BY `data` DESC LIMIT 50";
     $data = getNewsFromLentas($q, $endq);
     for ($i = 0; $i < $data["total"]; $i++) {
