@@ -1838,6 +1838,34 @@ function ThisIsSpam(id) {
         $("#CommentItem-" + id + " .ThisIsSpam").html(' | Сообщение о спаме отправлено');
     }, true);
 }
+/* Выдача блока выбора спама */
+
+function CommentSpam(id, uri){
+
+    var body = $("body");
+
+    if(uri.indexOf("#") == -1) {
+
+        uricomment = uri + "#comment"+id;
+
+    }else{
+        uricomment = uri.substr(0, uri.length - 1) + id;
+
+    }
+    var spamBlock = '<div class="complaint" onclick="$(this).hide()"><div class="complaint-content"><div class="complaint-close">X</div><p class="complaint-title">Укажите причину жалобы</p><div class="complaint-cause"  onclick="SendMailSpam(uricomment,1)">Спам</div><div class="complaint-cause" onclick="SendMailSpam(uricomment,2)">Оскорбление</div><div class="complaint-cause" onclick="SendMailSpam(uricomment,3)">Порнография</div></div></div>';
+    body.append(spamBlock);
+
+}
+/* Отправка Имейл жалобы на спам */
+function SendMailSpam(uri,type) {
+    var spamBlock = '<div class="complaint" onclick="$(this).hide()"><div class="complaint-content"><img src="https://cdn.icon-icons.com/icons2/894/PNG/512/Tick_Mark_Dark_icon-icons.com_69147.png"><br/><div class="complaint-title">Спасибо!</div><br/><p class="complaint-text">Ваша жалоба отправлена на рассмотрение</p></div></div>';
+    $("body").append(spamBlock);
+    JsHttpRequest.query('/modules/standart/UsersComment-JSReq.php', {
+        'action': "complaint",
+        'link': uri
+    },function(){}, true);
+    $('.complaint').fadeOut(2000, function (){});
+}
 
 function in_array(what, where) {
     for (var i = 0; i < where.length; i++) {

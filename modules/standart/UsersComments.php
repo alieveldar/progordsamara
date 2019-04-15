@@ -9,7 +9,7 @@ function UserTracker($link, $pid)
 function UsersComments($link, $pid, $sets, $header = 1)
 {
     global $VARS, $GLOBAL, $RealHost, $RealPage, $UserSetsSite, $C, $C5, $C10, $C15;
-    $file = "user_comments-".$link.".".$pid;
+    $file = "user_comments-" . $link . "." . $pid;
 
     if (!isset($UserSetsSite)) {
         return false;
@@ -25,10 +25,10 @@ function UsersComments($link, $pid, $sets, $header = 1)
     list($text, $cap) = GetUsersComments($link, $pid);
 
     if ($header == 1) {
-        $text = $C."<a name='comments' id='comments'></a><h2>Комментарии</h2>".$C10."<div id='UserCommentsList'>".$text."</div>";
+        $text = $C . "<a name='comments' id='comments'></a><h2>Комментарии</h2>" . $C10 . "<div id='UserCommentsList'>" . $text . "</div>";
     }
     if ($header == 0) {
-        $text = $C."<a name='comments' id='comments'></a>".$C."<div id='UserCommentsList'>".$text."</div>";
+        $text = $C . "<a name='comments' id='comments'></a>" . $C . "<div id='UserCommentsList'>" . $text . "</div>";
     }
 
     //$text.=$C10."<!--ADS-->";
@@ -38,25 +38,26 @@ function UsersComments($link, $pid, $sets, $header = 1)
     if ($sets == 0 || $GLOBAL["USER"]["role"] >= 1) {
         if (($UserSetsSite[4] == 1 && $GLOBAL["USER"]["id"] == 0) || $GLOBAL["USER"]["id"] != 0) {
             if ($header == 1) {
-                $text .= $C5."<a name='addcomment' id='addcomment'></a><h2>Добавить комментарий</h2>".$C."<div class='UserCommentsForm'>".GetFormComments(
-                    $link,
-                    $pid
-                  )."</div>";
+                $text .= $C5 . "<a name='addcomment' id='addcomment'></a><h2>Добавить комментарий</h2>" . $C . "<div class='UserCommentsForm'>" . GetFormComments(
+                        $link,
+                        $pid
+                    ) . "</div>";
             }
             if ($header == 0) {
-                $text .= $C5."<a name='addcomment' id='addcomment'></a>".$C."<div class='UserCommentsForm'>".GetFormComments(
-                    $link,
-                    $pid
-                  )."</div>";
+                $text .= $C5 . "<a name='addcomment' id='addcomment'></a>" . $C . "<div class='UserCommentsForm'>" . GetFormComments(
+                        $link,
+                        $pid
+                    ) . "</div>";
             }
         }
         if (($UserSetsSite[4] == 1 && $GLOBAL["USER"]["id"] == 0) || $GLOBAL["USER"]["id"] != 0) {
-            $text .= "<script>jQuery.each($('.CommentAnswer'), function(i, val) { var fid=$(this).attr('id'); id=fid.split('-'); $(this).html(\"<a href='javascript:void(0);' onClick='CommentAnswer(\"+id[1]+\");'>ОТВЕТИТЬ</a>\"); });</script>";
+            $text .= "<script>jQuery.each($('.CommentAnswer'), function(i, val) { var fid=$(this).attr('id'); id=fid.split('-'); $(this).html(\"<a href='javascript:void(0);' onClick='CommentAnswer(\"+id[1]+\");'>ОТВЕТ</a>\"); });</script>";
+            $text .= "<script>jQuery.each($('.CommentSpam'), function(i, val) { var fid=$(this).attr('id'); id=fid.split('-'); $(this).html(\"<a href='javascript:void(0);' onClick='CommentSpam(\"+id[1]+\", document.location.href);'>ПОЖАЛОВАТЬСЯ</a>\"); });</script>";
         } else {
             $redirect_uri = rawurlencode(
-              "http://".$RealHost."/modules/standart/LoginSocial.php?back=http://".$RealHost."/".$RealPage
+                "http://" . $RealHost . "/modules/standart/LoginSocial.php?back=http://" . $RealHost . "/" . $RealPage
             );
-            $text .= '<script>jQuery.each($(".CommentAnswer"), function(i, val) { var fid=$(this).attr("id"); id=fid.split("-"); $(this).html("<a href=\'javascript:void(0);\' onClick=\'UserAuthEnter(\"Авторизация\", \"'.$redirect_uri.'\");\'>ОТВЕТИТЬ</a>"); });</script>';
+            $text .= '<script>jQuery.each($(".CommentAnswer"), function(i, val) { var fid=$(this).attr("id"); id=fid.split("-"); $(this).html("<a href=\'javascript:void(0);\' onClick=\'UserAuthEnter(\"Авторизация\", \"' . $redirect_uri . '\");\'>ОТВЕТИТЬ</a>"); });</script>';
         }
 
     }
@@ -66,11 +67,11 @@ function UsersComments($link, $pid, $sets, $header = 1)
         $text .= "<script>jQuery.each($('.CommentAdmin'), function(i, val) { var fid=$(this).attr('id'); id=fid.split('-'); $(this).html(\"<span class='CommentDelete'><img src='/template/standart/loader2.gif' style='width:57px; height:14px; padding:0; margin-left:15px;' /><a href='javascript:void(0);' onClick='CommentDelete(\"+id[1]+\");' class='CommentDelAdn'>Удалить</a></span><span class='CommentEdit'><img src='/template/standart/loader2.gif' style='width:57px; height:14px; padding:0; float:right; margin-left:15px;' /><a href='javascript:void(0);' onClick='GetCommentForm(\"+id[1]+\");' class='CommentEditAdn'>Редактировать</a></span>\"); });</script>";
     } else {
         if ($GLOBAL["USER"]["id"]) {
-            $text .= "<script>jQuery.each($('.CommentAdmin'), function(i, val) { var fid=$(this).attr('id'); id=fid.split('-'); if(id[2] == ".(int)$GLOBAL["USER"]["id"]." || id[2] == ".str_replace(
-                ".",
-                "",
-                $GLOBAL["ip"]
-              ).") { $(this).html(\"<span class='CommentEdit'><img src='/template/standart/loader2.gif' style='width:57px; height:14px; padding:0; float:right; margin-left:15px;' /><a href='javascript:void(0);' onClick='GetCommentForm(\"+id[1]+\");' class='CommentEditAdn'>Редактировать</a></span>\");} });</script>";
+            $text .= "<script>jQuery.each($('.CommentAdmin'), function(i, val) { var fid=$(this).attr('id'); id=fid.split('-'); if(id[2] == " . (int)$GLOBAL["USER"]["id"] . " || id[2] == " . str_replace(
+                    ".",
+                    "",
+                    $GLOBAL["ip"]
+                ) . ") { $(this).html(\"<span class='CommentEdit'><img src='/template/standart/loader2.gif' style='width:57px; height:14px; padding:0; float:right; margin-left:15px;' /><a href='javascript:void(0);' onClick='GetCommentForm(\"+id[1]+\");' class='CommentEditAdn'>Редактировать</a></span>\");} });</script>";
         }
     }
 
@@ -79,8 +80,7 @@ function UsersComments($link, $pid, $sets, $header = 1)
     }
 
     if ($sets == 0 && $GLOBAL["USER"]["id"] == 0 && $UserSetsSite[4] == 0) {
-        $text .= $C5."<a name='addcomment' id='addcomment'></a><h2>Авторизуйтесь для добавления комментария</h2>".$C."<div class='UserCommentsForm'>".GetUserAuthForm(
-          )."</div>";
+        $text .= $C5 . "<a name='addcomment' id='addcomment'></a><h2>Авторизуйтесь для добавления комментария</h2>" . $C . "<div class='UserCommentsForm'>" . GetUserAuthForm() . "</div>";
     }
     $text .= "<script>jQuery.each($('.quote'), function(i, val) { if($(this).height()>$(this).parents('.quote-overview.short').height()) $('.ToggleShow', $(this).parents('.quote-container')).show() });</script>";
 
@@ -97,32 +97,32 @@ function GetUsersComments($link, $pid)
     $ip = $_SERVER['REMOTE_ADDR'];
 
     $smiles = array(
-      ":-)" => "<span class='Smile Smile1'>:-)</span>",
-      ";-)" => "<span class='Smile Smile2'>;-)</span>",
-      ":-(" => "<span class='Smile Smile3'>:-(</span>",
-      ":-D" => "<span class='Smile Smile4'>:-D</span>",
-      ":-P" => "<span class='Smile Smile5'>:-P</span>",
-      "=-D" => "<span class='Smile Smile6'>=-D</span>",
-      "8'-(" => "<span class='Smile Smile7'>8'-(</span>",
-      ">-(" => "<span class='Smile Smile8'>>-(</span>",
-      ";-|" => "<span class='Smile Smile9'>;-|</span>",
-      "8-*" => "<span class='Smile Smile10'>8-*</span>",
-      "(!)" => "<span class='Smile Smile11'>(!)</span>",
-      "(?)" => "<span class='Smile Smile12'>(?)</span>",
-      "8-|" => "<span class='Smile Smile13'>8-|</span>",
-      "%-8" => "<span class='Smile Smile14'>%-8</span>",
-      "B-|" => "<span class='Smile Smile15'>B-|</span>",
-      ">:>" => "<span class='Smile Smile16'>>:></span>",
+        ":-)" => "<span class='Smile Smile1'>:-)</span>",
+        ";-)" => "<span class='Smile Smile2'>;-)</span>",
+        ":-(" => "<span class='Smile Smile3'>:-(</span>",
+        ":-D" => "<span class='Smile Smile4'>:-D</span>",
+        ":-P" => "<span class='Smile Smile5'>:-P</span>",
+        "=-D" => "<span class='Smile Smile6'>=-D</span>",
+        "8'-(" => "<span class='Smile Smile7'>8'-(</span>",
+        ">-(" => "<span class='Smile Smile8'>>-(</span>",
+        ";-|" => "<span class='Smile Smile9'>;-|</span>",
+        "8-*" => "<span class='Smile Smile10'>8-*</span>",
+        "(!)" => "<span class='Smile Smile11'>(!)</span>",
+        "(?)" => "<span class='Smile Smile12'>(?)</span>",
+        "8-|" => "<span class='Smile Smile13'>8-|</span>",
+        "%-8" => "<span class='Smile Smile14'>%-8</span>",
+        "B-|" => "<span class='Smile Smile15'>B-|</span>",
+        ">:>" => "<span class='Smile Smile16'>>:></span>",
     );
 
     $data = DB(
-      "SELECT `comments1`.*, `comments2`.`uid` AS `touid`, `comments2`.`text` AS `totext`, `users1`.`nick`, `users1`.`spectitle`, `users1`.`avatar`, `users1`.`signature`, `users1`.`role`, `users1`.`karma`, `users1`.`created`, `users2`.`nick` AS `tonick` FROM `_comments` AS `comments1`
-	LEFT JOIN `_users` AS `users1` ON `users1`.`id`=`comments1`.`uid` LEFT JOIN `_comments` AS `comments2` ON `comments2`.`id`=`comments1`.`toid` LEFT JOIN `_users` AS `users2` ON `users2`.`id`=`comments2`.`uid` WHERE (`comments1`.`link`='".$link."' && `comments1`.`pid`='".(int)$pid."') GROUP BY 1 ORDER BY `comments1`.`data` ASC"
+        "SELECT `comments1`.*, `comments2`.`uid` AS `touid`, `comments2`.`text` AS `totext`, `users1`.`nick`, `users1`.`spectitle`, `users1`.`avatar`, `users1`.`signature`, `users1`.`role`, `users1`.`karma`, `users1`.`created`, `users2`.`nick` AS `tonick` FROM `_comments` AS `comments1`
+	LEFT JOIN `_users` AS `users1` ON `users1`.`id`=`comments1`.`uid` LEFT JOIN `_comments` AS `comments2` ON `comments2`.`id`=`comments1`.`toid` LEFT JOIN `_users` AS `users2` ON `users2`.`id`=`comments2`.`uid` WHERE (`comments1`.`link`='" . $link . "' && `comments1`.`pid`='" . (int)$pid . "') GROUP BY 1 ORDER BY `comments1`.`data` ASC"
     );
     if ($data["total"] == 0) {
         return (array(
-          "<div class='Info' id='NoComments'>Нет комментариев к данной публикации</div>",
-          "",
+            "<div class='Info' id='NoComments'>Нет комментариев к данной публикации</div>",
+            "",
         ));
     }
 
@@ -144,10 +144,10 @@ function GetUsersComments($link, $pid)
     ### Вложения для всех комментариев
     if ($UserSetsSite[7] == 1) {
         $f = DB(
-          "SELECT `pic`, `pid` FROM `_commentf` WHERE (`pid` IN (".implode(
-            ",",
-            $ids
-          ).")) ORDER BY `id` ASC"
+            "SELECT `pic`, `pid` FROM `_commentf` WHERE (`pid` IN (" . implode(
+                ",",
+                $ids
+            ) . ")) ORDER BY `id` ASC"
         );
         for ($j = 0; $j < $f["total"]; $j++) {
             @mysql_data_seek($f["result"], $j);
@@ -160,8 +160,7 @@ function GetUsersComments($link, $pid)
     ### Likes для комментариев по IP
     $waslike = array();
     $f = DB(
-      "SELECT `pid` FROM `_likes` WHERE (`link`='_comments' && `data`>'".(time(
-        ) - 24 * 60 * 60)."' && `ip`='".$ip."')"
+        "SELECT `pid` FROM `_likes` WHERE (`link`='_comments' && `data`>'" . (time() - 24 * 60 * 60) . "' && `ip`='" . $ip . "')"
     );
     for ($j = 0; $j < $f["total"]; $j++) {
         @mysql_data_seek($f["result"], $j);
@@ -178,16 +177,16 @@ function GetUsersComments($link, $pid)
         $toComment = "";
         $cid = $com["id"];
         if ($com["uid"] == 0) {
-            $com["nick"] = "<span id='UserIdComment-".$com["id"]."' class='UserComName'>".($com["uname"] ? $com["uname"] : "Горожанин")."</span>";
+            $com["nick"] = "<span id='UserIdComment-" . $com["id"] . "' class='UserComName'>" . ($com["uname"] ? $com["uname"] : "Горожанин") . "</span>";
             $avatar = "<img src='/userfiles/avatar/no_photo.jpg'>";
             if (in_array(
-              $RealHost,
-              array('nsk.progorodsamara.ru', 'nsk.samara.cc')
+                $RealHost,
+                array('nsk.progorodsamara.ru', 'nsk.samara.cc')
             )) {
                 $avatar = "<img src='/userfiles/avatar/no_photo_nsk.png'>";
             }
         } else {
-            $com["nick"] = "<a target='_blank' href='/users/view/".$com["uid"]."/'><span id='UserIdComment-".$com["id"]."' class='UserComName'>".$com["nick"]."</span></a>";
+            $com["nick"] = "<a target='_blank' href='/users/view/" . $com["uid"] . "/'><span id='UserIdComment-" . $com["id"] . "' class='UserComName'>" . $com["nick"] . "</span></a>";
 
             /* Якорь на последние комментарии */
             if ($lastc == 0 && $i > ($data["total"] - 4)) {
@@ -196,21 +195,21 @@ function GetUsersComments($link, $pid)
             }
 
             if (is_file(
-                $_SERVER['DOCUMENT_ROOT']."/".$com["avatar"]
-              ) && filesize(
-                $_SERVER['DOCUMENT_ROOT']."/".$com["avatar"]
-              ) > 100 && $com["avatar"] != "" && $com["avatar"] != "/") {
-                $avatar = "<a target='_blank' href='/users/view/".$com["uid"]."/'><img src='/".$com["avatar"]."'></a>";
+                    $_SERVER['DOCUMENT_ROOT'] . "/" . $com["avatar"]
+                ) && filesize(
+                    $_SERVER['DOCUMENT_ROOT'] . "/" . $com["avatar"]
+                ) > 100 && $com["avatar"] != "" && $com["avatar"] != "/") {
+                $avatar = "<a target='_blank' href='/users/view/" . $com["uid"] . "/'><img src='/" . $com["avatar"] . "'></a>";
             } else {
-                $avatar = "<a target='_blank' href='/users/view/".$com["uid"]."/'><img src='/userfiles/avatar/no_photo.jpg'></a>";
+                $avatar = "<a target='_blank' href='/users/view/" . $com["uid"] . "/'><img src='/userfiles/avatar/no_photo.jpg'></a>";
             }
         }
 
-        $answer = "<span class='CommentAdmin' id='CommentAdmin-".$com["id"]."-".($com["uid"] ? $com["uid"] : str_replace(
-            ".",
-            "",
-            $com["ip"]
-          ))."'></span>";
+        $answer = "<span class='CommentAdmin' id='CommentAdmin-" . $com["id"] . "-" . ($com["uid"] ? $com["uid"] : str_replace(
+                ".",
+                "",
+                $com["ip"]
+            )) . "'></span>";
 
         ### Медальки
         //if ((time()-$com["created"])>60*60*24*365) { $medal="<img src='/template/standart/medal/pochet.gif' title='Почетный гражданин'>"; } # больше года на сайте
@@ -218,17 +217,17 @@ function GetUsersComments($link, $pid)
         ### Комментарий
 
         if ($com["toid"]) {
-            $toComment = $C."<div class='quote-container'><b>В ответ на <a href='#comment".$com["toid"]."'><u>комментарий</u></a> пользователя <a href='/users/view/".$com["touid"]."'><u>".$com["tonick"]."</u></a></b><div class='C5'></div><div><div class='quote-overview short'><div class='quote'>".nl2br(
-                AntiMatFunc2($com["totext"])
-              );
+            $toComment = $C . "<div class='quote-container'><b>В ответ на <a href='#comment" . $com["toid"] . "'><u>комментарий</u></a> пользователя <a href='/users/view/" . $com["touid"] . "'><u>" . $com["tonick"] . "</u></a></b><div class='C5'></div><div><div class='quote-overview short'><div class='quote'>" . nl2br(
+                    AntiMatFunc2($com["totext"])
+                );
             if (count($inc[$com["toid"]]) > 0) {
-                $toComment .= $C10."<div class='CommentInc'>";
+                $toComment .= $C10 . "<div class='CommentInc'>";
                 foreach ($inc[$com["toid"]] as $k => $pic) {
-                    $toComment .= "<a href='/userfiles/comoriginal/".$pic."' rel='prettyPhoto[gallery]'><img src='/userfiles/compreview/".$pic."' /></a>";
+                    $toComment .= "<a href='/userfiles/comoriginal/" . $pic . "' rel='prettyPhoto[gallery]'><img src='/userfiles/compreview/" . $pic . "' /></a>";
                 }
                 $toComment .= "<div class='C'></div></div>";
             }
-            $toComment .= "</div></div><div class='ToggleShow'><a href='javascript:void(0)' onclick='$(\".quote-overview\", $(this).parents(\".quote-container\")).removeClass(\"short\"); $(this).parents(\".ToggleShow\").hide()'>Развернуть</a></div></div></div>".$C5;
+            $toComment .= "</div></div><div class='ToggleShow'><a href='javascript:void(0)' onclick='$(\".quote-overview\", $(this).parents(\".quote-container\")).removeClass(\"short\"); $(this).parents(\".ToggleShow\").hide()'>Развернуть</a></div></div></div>" . $C5;
         }
 
         $comment = nl2br($com["text"]);
@@ -243,7 +242,7 @@ function GetUsersComments($link, $pid)
                     preg_match('/v=[^&]+/', $url, $matches);
                     $video_id = str_replace('v=', '', $matches[0]);
                 }
-                $embed = '<br /><object width="500" height="390"><param name="movie" value="http://www.youtube.com/v/'.$video_id.'&hl=en&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/'.$video_id.'&hl=en&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="390"></embed></object>';
+                $embed = '<br /><object width="500" height="390"><param name="movie" value="http://www.youtube.com/v/' . $video_id . '&hl=en&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' . $video_id . '&hl=en&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="390"></embed></object>';
                 $comment = str_replace($url, $embed, $comment);
             }
         }
@@ -253,48 +252,49 @@ function GetUsersComments($link, $pid)
         $comment = strtr($comment, array("&#039;" => "'"));
         $comment = strtr($comment, $smiles);
 
-        $text .= "<a name='comment".$com["id"]."' id='comment".$com["id"]."'></a>";
+        $text .= "<a name='comment" . $com["id"] . "' id='comment" . $com["id"] . "'></a>";
         $dopclass = "";
         if ($com["id"] == $maxlikesid) {
             $dopclass = " BestCom";
         }
-        $text .= "<div class='CommentItem".$dopclass."' id='CommentItem-".$com["id"]."'>";
-        $text .= "<div class='LeftInfo'>".$avatar."<b>".$com["nick"]."</b>".$datar[1]."</div>";
-        $text .= "<div class='RightInfo'>".$answer."</div>".$C10;
+        $text .= "<div class='CommentItem" . $dopclass . "' id='CommentItem-" . $com["id"] . "'>";
+        $text .= "<div class='LeftInfo'>" . $avatar . "<b>" . $com["nick"] . "</b>" . $datar[1] . "</div>";
+        $text .= "<div class='RightInfo'>" . $answer . "</div>" . $C10;
         $text .= $toComment;
-        $text .= "<div class='view1'>".AntiMatFunc2(
-            $comment
-          )."</div><div class='view2'></div>".$C10;
+        $text .= "<div class='view1'>" . AntiMatFunc2(
+                $comment
+            ) . "</div><div class='view2'></div>" . $C10;
         /* Вложения */
         if (count($inc[$cid]) > 0) {
             $text .= "<div class='CommentInc'>";
             foreach ($inc[$cid] as $k => $pic) {
-                $text .= "<a href='/userfiles/comoriginal/".$pic."' rel='prettyPhoto[gallery]'><img src='/userfiles/compreview/".$pic."' /></a>";
+                $text .= "<a href='/userfiles/comoriginal/" . $pic . "' rel='prettyPhoto[gallery]'><img src='/userfiles/compreview/" . $pic . "' /></a>";
             }
-            $text .= $C."</div>".$C10;
+            $text .= $C . "</div>" . $C10;
         }
         /* Кнопка ответить and likes */
         $ltext = "";
         $plikes = (int)$com["likes"];
         $dlikes = (int)$com["dislikes"];
         if (in_array($com["id"], $waslike)) {
-            $ltext .= "<div class='DlikesNs' title='Нет'><img src='/template/standart/dislike.png'>".$dlikes."</div>";
-            $ltext .= "<div class='LikesNs' title='Да'><img src='/template/standart/like.png'>".$plikes."</div>";
+            $ltext .= "<div class='DlikesNs' title='Нет'><img src='/template/standart/dislike.png'>" . $dlikes . "</div>";
+            $ltext .= "<div class='LikesNs' title='Да'><img src='/template/standart/like.png'>" . $plikes . "</div>";
             $ltext .= "<div class='LikesInf'>Спасибо за голос!</div>";
         } else {
-            $ltext .= "<div class='DlikesNs' title='Нет'><a href='javascript:void(0);' onclick=\"likeSaveComment(0, $com[id])\"><img src='/template/standart/dislike.png'>".$dlikes."</a></div>";
-            $ltext .= "<div class='LikesNs' title='Да'><a href='javascript:void(0);' onclick=\"likeSaveComment(1, $com[id])\"><img src='/template/standart/like.png'>".$plikes."</a></div>";
+            $ltext .= "<div class='DlikesNs' title='Нет'><a href='javascript:void(0);' onclick=\"likeSaveComment(0, $com[id])\"><img src='/template/standart/dislike.png'>" . $dlikes . "</a></div>";
+            $ltext .= "<div class='LikesNs' title='Да'><a href='javascript:void(0);' onclick=\"likeSaveComment(1, $com[id])\"><img src='/template/standart/like.png'>" . $plikes . "</a></div>";
             $ltext .= "<div class='LikesInf'>Согласны с автором?</div>";
         }
 
-        $text .= $C5."<noindex>";
+        $text .= $C5 . "<noindex>";
         if ($com["id"] == $maxlikesid) {
             $text .= "<div class='CommentBestLike' title='По версии читателей и количеству «+»'>Лучший комментарий</div>";
         }
-        $text .= "</i></b><div class='CommentAnswer' id='CommentAnswer-".$com["id"]."'></div><div class='IRight' id='CommentLike-".$com["id"]."'>".$ltext."</div>";
+        $text .= "</i></b><div class='CommentAnswer' id='CommentAnswer-" . $com["id"] . "'></div><div class='IRight' id='CommentLike-" . $com["id"] . "'>" . $ltext . "</div>";
+        $text .= "<div class='CommentSpam' id='CommentSpam-" . $com["id"] . "'></div>"; //Кнопка пожаловаться на спам
         $text .= "</noindex>";
 
-        $text .= $C."</div>";
+        $text .= $C . "</div>";
     }
 
     return (array($text, ""));
@@ -331,24 +331,22 @@ function GetFormComments($link, $pid)
 
     $text .= "<div class='UserComTexts'><p style='font-size:12px; line-height:15px;'><b style='color:red'>Внимание!</b> Правилами сайта запрещается использовать мат и высказываться оскорбительно по отношению к другим людям</p>";
     if ($GLOBAL["USER"]["id"] == 0) {
-        $text .= "<div class='UserComNameDiv'><input class='UserComName' type='text' placeholder='Введите свое имя' value='".$_SESSION["username"]."' /><p class='or'>или авторизуйтесь</p>".GetUserAuthForm(
-          )."</div>".$C5;
+        $text .= "<div class='UserComNameDiv'><input class='UserComName' type='text' placeholder='Введите свое имя' value='" . $_SESSION["username"] . "' /><p class='or'>или авторизуйтесь</p>" . GetUserAuthForm() . "</div>" . $C5;
     }
-    $text .= "<div class='UserComAnswer'></div><div class='UserComAnswerC'></div>".$C."<div class='UserComTextDiv'><textarea class='UserComText' placeholder='Введите текст комментария'></textarea>".$smiles."<div class='Info' style='line-height:26px;'>  Допускаются теги &lt;b&gt;, &lt;i&gt;, &lt;u&gt;, &lt;p&gt; и ссылки http://youtube.com/watch?v=VIDEO</div></div>";
+    $text .= "<div class='UserComAnswer'></div><div class='UserComAnswerC'></div>" . $C . "<div class='UserComTextDiv'><textarea class='UserComText' placeholder='Введите текст комментария'></textarea>" . $smiles . "<div class='Info' style='line-height:26px;'>  Допускаются теги &lt;b&gt;, &lt;i&gt;, &lt;u&gt;, &lt;p&gt; и ссылки http://youtube.com/watch?v=VIDEO</div></div>";
     if ($UserSetsSite[7] == 1) {
         $text .= '<link href="/modules/standart/multiupload/client/uploader2.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="/modules/standart/multiupload/client/uploader.js"></script>';
 
-        $text .= $C10.'<div id="uploadercom"></div><div class="Info" style="float:left; padding:10px;">Прикрепите фотографии (jpg, gif и png)</div><div id="uploadercompics" style="display:none;"></div>'.$C5.'';
+        $text .= $C10 . '<div id="uploadercom"></div><div class="Info" style="float:left; padding:10px;">Прикрепите фотографии (jpg, gif и png)</div><div id="uploadercompics" style="display:none;"></div>' . $C5 . '';
     }
     if ($GLOBAL["USER"]["id"] == 0 && $UserSetsSite[5] == 1) {
-        $text .= '<div class="MiniInput"><img src="/modules/standart/captcha/Captcha.php?'.time(
-          ).'" class="captchaImg" /><input name="captcha" class="UserComCaptcha" type="text"></div>';
+        $text .= '<div class="MiniInput"><img src="/modules/standart/captcha/Captcha.php?' . time() . '" class="captchaImg" /><input name="captcha" class="UserComCaptcha" type="text"></div>';
     }
-    $text .= $C5."<div class='CommentSend'><input type='submit' name='sendbutton' class='SaveButton' value='Добавить комментарий' onClick=\"SendUserComment($(this).parents('.UserCommentsForm'));\"></div>";
+    $text .= $C5 . "<div class='CommentSend'><input type='submit' name='sendbutton' class='SaveButton' value='Добавить комментарий' onClick=\"SendUserComment($(this).parents('.UserCommentsForm'));\"></div>";
     if ($VARS["commenttext"] != "") {
-        $text .= $C10."<div class='Info' style='color:#666;'>".$VARS["commenttext"]."</div>";
+        $text .= $C10 . "<div class='Info' style='color:#666;'>" . $VARS["commenttext"] . "</div>";
     }
-    $text .= $C."</div>";
+    $text .= $C . "</div>";
 
     return ($text);
 }
