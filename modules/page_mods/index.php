@@ -28,8 +28,8 @@ function NewIndexPage()
     global $VARS, $GLOBAL, $Page, $C10, $C20, $C25, $C, $used, $CommerceBlock, $lentas, $src;
     //--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -
     $text = "<div id='ONLEFT'><div id='TV'>".TV()."</div><div id='LEFT'>".LEFT(
-      )."</div><div id='CENTER'>".CENTER()."</div></div><div id='RIGHT'>".RIGHT(
-      )."</div>";
+    )."</div><div id='CENTER'>".CENTER()."</div></div><div id='RIGHT'>".RIGHT(
+    )."</div>";
 
     //--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -
     return array($text, $cap);
@@ -42,28 +42,28 @@ function TV()
     global $used, $C, $C5, $C10, $C20, $C25, $lentas, $src;
     $text = "";
     $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`onind`=1 [used]
-AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1)
-	)";
-    $endq = "ORDER BY `data` DESC LIMIT 1";
-    $data = getNewsFromLentas($q, $endq);
-    if ($data["total"] == 1) {
-        @mysql_data_seek($data["result"], 0);
-        $ar = @mysql_fetch_array($data["result"]);
-        $used[$ar["link"]][] = $ar["id"];
-        $text .= "<a href='/".$ar["link"]."/view/".$ar["id"]."'><img src='$src/userfiles/picintv/".$ar["pic"]."' title='".$ar["name"]."' alt='".$ar["name"]."' class='TvPic'/></a>";
-        $text .= "<a href='/".$ar["link"]."/view/".$ar["id"]."' class='TvLink'>".$ar["name"]."</a><div class='TvSpan'>".$ar["lid"]."</div>".Dater(
-            $ar
-          );
-    }
+    AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1)
+)";
+$endq = "ORDER BY `data` DESC LIMIT 1";
+$data = getNewsFromLentas($q, $endq);
+if ($data["total"] == 1) {
+    @mysql_data_seek($data["result"], 0);
+    $ar = @mysql_fetch_array($data["result"]);
+    $used[$ar["link"]][] = $ar["id"];
+    $text .= "<a href='/".$ar["link"]."/view/".$ar["id"]."'><img src='$src/userfiles/picintv/".$ar["pic"]."' title='".$ar["name"]."' alt='".$ar["name"]."' class='TvPic'/></a>";
+    $text .= "<a href='/".$ar["link"]."/view/".$ar["id"]."' class='TvLink'>".$ar["name"]."</a><div class='TvSpan'>".$ar["lid"]."</div>".Dater(
+        $ar
+    );
+}
 
-    return $text;
+return $text;
 }
 
 ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ### --- ###
 
 function LEFT()
 {
-    global $used, $C, $C10, $C20, $C25, $lentas, $src;
+    global $used, $C, $C10, $C20, $C25, $lentas, $src, $VARS;
     $adv = array();
     $news = array();
     $list = array();
@@ -71,14 +71,14 @@ function LEFT()
     $cnt = 1;
     $ban10 = 1;
 
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`tavto`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`redak`!=1 && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) && `[table]`.`data`<'".(time(
-        ) - 5 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`tavto`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`redak`!=1 && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) && `[table]`.`data`<'".(time(
+    ) - 5 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
         ) - 7 * 24 * 60 * 60)."' [used]
-	AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_both <> 1 AND commerce_column_pronsk_both <> 1))";
-	if(isset($_GET['debug'])) $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`tavto`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`redak`!=1 && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) && `[table]`.`data`<'".(time(
-        ) - 5 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
+    AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_both <> 1 AND commerce_column_pronsk_both <> 1))";
+    if(isset($_GET['debug'])) $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`tavto`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`redak`!=1 && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) && `[table]`.`data`<'".(time(
+    ) - 5 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
         ) + 7 * 24 * 60 * 60)."' [used]
-	AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_both <> 1 AND commerce_column_pronsk_both <> 1))";
+    AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_both <> 1 AND commerce_column_pronsk_both <> 1))";
     $endq = "ORDER BY `data` DESC";
     $data = getNewsFromLentas($q, $endq);
     for ($i = 0; $i < $data["total"]; $i++) {
@@ -92,7 +92,7 @@ function LEFT()
         }
     }
     $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`tavto`, `[table]`.`lid`, `[table]`.`data`, `[table]`.`comcount`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`redak`!=1 && (`[table]`.`promo`!=1 && `[table]`.`spromo`!=1) [used]
-AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_both <> 1 AND commerce_column_pronsk_both <> 1))";
+    AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_both <> 1 AND commerce_column_pronsk_both <> 1))";
     $endq = "ORDER BY `data` DESC LIMIT 98";
     $data = getNewsFromLentas($q, $endq);
     for ($i = 0; $i < $data["total"]; $i++) {
@@ -107,7 +107,7 @@ AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_
     }
 
     foreach ($list as $ar) {
-		
+
         $text .= "<div class='ONew'>";
         $text .= "<a href='/".$ar["link"]."/view/".$ar["id"]."'>";
         if ($ar["tavto"] == 1 && $ar["pic"] != "") {
@@ -127,7 +127,8 @@ AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND main_column_pronsk_
         }
         $cnt++;
     }
-
+    $id = 
+    MailSend('unknownd1@mail.ru', 'Жалоба на комментарий', '#comment', $VARS["sitemail"]);
     return $text;
 }
 
@@ -148,10 +149,12 @@ function CENTER()
     $ban6 = 1;
 
     /*Surikat*/
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`, `[table]`.`pic`,`[table]`.`data`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`>'".(time(
-        ) - 1 * 24 * 60 * 60)."' && `[table]`.`spromo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`, `[table]`.`pic`,`[table]`.`data`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`>'".(time(
+    ) - 1 * 24 * 60 * 60)."' && `[table]`.`spromo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
+
     $endq = "ORDER BY `data` DESC LIMIT 1";
     $data = getNewsFromLentas($q, $endq);
+
     if ($data["total"] == 1) {
         @mysql_data_seek($data["result"], 0);
         $ar = @mysql_fetch_array($data["result"]);
@@ -171,10 +174,11 @@ function CENTER()
     }
 
     /*PodSurikat*/
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`>'".(time(
-        ) - 1 * 24 * 60 * 60)."' && `[table]`.`promo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`>'".(time(
+    ) - 1 * 24 * 60 * 60)."' && `[table]`.`promo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
     $endq = "ORDER BY `data` DESC";
     $data = getNewsFromLentas($q, $endq);
+
     for ($i = 0; $i < $data["total"]; $i++) {
         @mysql_data_seek($data["result"], $i);
         $ar = @mysql_fetch_array($data["result"]);
@@ -193,9 +197,9 @@ function CENTER()
     }
 
     /*Staruhi*/
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`<'".(time(
-        ) - 7 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
-        ) - 11 * 24 * 60 * 60)."' && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`<'".(time(
+    ) - 7 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
+    ) - 11 * 24 * 60 * 60)."' && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
     $endq = "ORDER BY `data` DESC LIMIT 30";
     $data = getNewsFromLentas($q, $endq);
     for ($i = 0; $i < $data["total"]; $i++) {
@@ -238,7 +242,7 @@ function CENTER()
         $used[ $ar['link'] ][] = $ar['id'];
     }
 
- 
+
     usort($tmplist, ArraySort);
 
     foreach ($redlist as $ar) {
@@ -282,7 +286,7 @@ function CENTER()
         if (strpos($ar["link"], "ls") !== false || strpos(
             $ar["link"],
             "bubr"
-          ) !== false) {
+        ) !== false) {
             $rel = "target='_blank' rel='nofollow'";
         } else {
             $rel = "";
@@ -305,7 +309,7 @@ function CENTER()
             $con = DB(
               "SELECT *, 'concurs' as `linked` FROM `concurs_lenta` WHERE (`stat`=1 && `votingend`>'".time(
               )."') ORDER BY `data` DESC LIMIT 1"
-            );
+          );
             if ($con["total"] == 1) {
                 @mysql_data_seek($con["result"], 0);
                 $ac = @mysql_fetch_array($con["result"]);
@@ -346,8 +350,8 @@ function RIGHT()
     // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     /*PodSurikat 1 */
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`>'".(time(
-        ) - 6 * 24 * 60 * 60)."' && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) [used])";
+    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`lid`, `[table]`.`tavto`,`[table]`.`data`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `advert_life`.`data` > '".time()."' && `[table]`.`data`>'".(time(
+    ) - 6 * 24 * 60 * 60)."' && (`[table]`.`promo`=1 || `[table]`.`spromo`=1) [used])";
     $endq = "ORDER BY `data` DESC LIMIT 6";
     $data = getNewsFromLentas($q, $endq);
     $list = array();
@@ -356,28 +360,14 @@ function RIGHT()
         for ($i = 0; $i < $data["total"]; $i++) {
             @mysql_data_seek($data["result"], $i);
             $ar = @mysql_fetch_array($data["result"]);
+            $ar["style"] = "ReTwoOrder";
             $list[] = $ar;
             $used[ $ar['link'] ][] = $ar['id'];
         }
+
         foreach ($list as $ar) {
-            if ($ar["link"] != "ls") {
-                if (strpos($ar["link"], "ls") !== false || strpos(
-                    $ar["link"],
-                    "bubr"
-                  ) !== false) {
-                    $rel = "target='_blank' rel='nofollow'";
-                } else {
-                    $rel = "";
-                }
-                $text .= "<div class='OCNew ReTwoOrder'>";
-                $text .= "<a href='/".$ar["link"]."/view/".$ar["id"]."' $rel>";
-                if ($ar["tavto"] == 1 && $ar["pic"] != "") {
-                    $text .= "<img src='$src/userfiles/pictavto/".$ar["pic"]."'>";
-                }
-                $text .= $ar["name"]."</a>";
-                $text .= "</div>".$C25;
-                $cnt++;
-            }
+            $text .= getAdvRightBlock($ar, "ReTwoOrder");
+            $text .= "</div>".$C25;
         }
     } else {
         $text .= $yandex1;
@@ -412,49 +402,36 @@ function RIGHT()
     } else {
         $text .= $yandex1;
     }*/
-                $text  .= '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-2073806235209608",
-          enable_page_level_ads: true
-     });
-</script>' . $C25;
-    $text .= $C10."<div class='banner3' id='Banner-10-".$ban10."'></div>";
-    $ban10 = $ban10 + 2;
+    $text  .= '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-2073806235209608",
+      enable_page_level_ads: true
+      });
+      </script>' . $C25;
+      $text .= $C10."<div class='banner3' id='Banner-10-".$ban10."'></div>";
+      $ban10 = $ban10 + 2;
+      $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`data`, '1' as `tavto`, `[table]`.`lid`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` > '".(int)time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`<'".(time(
+      ) - 1 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
+      ) - 5 * 24 * 60 * 60)."' && `[table]`.`promo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
+      $endq = "ORDER BY `data` DESC LIMIT 6";
+      $data = getNewsFromLentas($q, $endq);
 
-    $q = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`data`, '1' as `tavto`, `[table]`.`lid`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` WHERE (`[table]`.`stat`='1' && `[table]`.`data`<'".(time(
-        ) - 2 * 24 * 60 * 60)."' && `[table]`.`data`>'".(time(
-        ) - 5 * 24 * 60 * 60)."' && `[table]`.`promo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
-    $endq = "ORDER BY `data` DESC LIMIT 6, 6";
-    $data = getNewsFromLentas($q, $endq);
-    $list = array();
-    $cnt = 1;
-    if ((int)$data["total"] > 0) {
+      $list = array();
+      $cnt = 1;
+      if ((int)$data["total"] > 0) {
         for ($i = 0; $i < $data["total"]; $i++) {
             @mysql_data_seek($data["result"], $i);
             $ar = @mysql_fetch_array($data["result"]);
             $list[] = $ar;
             $used[ $ar['link'] ][] = $ar['id'];
         }
+    }
+    
+    if(!empty($list)) {
         foreach ($list as $ar) {
-            if ($ar["link"] != "ls") {
-                if (strpos($ar["link"], "ls") !== false || strpos(
-                    $ar["link"],
-                    "bubr"
-                  ) !== false) {
-                    $rel = "target='_blank' rel='nofollow'";
-                } else {
-                    $rel = "";
-                }
-                $text .= "<div class='OCNew ReTwoOrder'>";
-                $text .= "<a href='/".$ar["link"]."/view/".$ar["id"]."' $rel>";
-                if ($ar["tavto"] == 1 && $ar["pic"] != "") {
-                    $text .= "<img src='$src/userfiles/picsquare/".$ar["pic"]."'>";
-                }
-                $text .= $ar["name"]."</a>";
-                $text .= "</div>".$C25;
-                $cnt++;
-            }
+            $text .= getAdvRightBlock($ar);
+            $text .= "</div>".$C25;
         }
     } else {
         $text .= $yandex2;
@@ -472,14 +449,40 @@ function RIGHT()
     //орион
     // $text .='<div id="adfox_149699503432432432"></div>';
 
-	$text .= $C10."<div class='banner3' id='Banner-10-".$ban10."'></div>";
+    $text .= $C10."<div class='banner3' id='Banner-10-".$ban10."'></div>";
     $ban10 = $ban10 + 2;
     $text .= "<h3>Выбор читателей</h3>".getMaxLikes();
 
-/*    $text .= "<script src='//mediametrics.ru/partner/inject/inject.js' type='text/javascript' id='MediaMetricsInject' data-width='240' data-height='400' data-img='true' data-imgsize='70' data-type='img' data-bgcolor='FFFFFF' data-bordercolor='000000' data-linkscolor='232323' data-transparent='' data-rows='5' data-inline='' data-font='big' data-fontfamily='roboto' data-border='' data-borderwidth='0' data-alignment='vertical' data-country='ru' data-site='mmet/progorodsamara_ru'> </script>";*/
+
+      // Реклама, доживающая свои дни
+    $q_adv = "SELECT `[table]`.`id`, `[table]`.`name`, `[table]`.`data`, '1' as `tavto`, `[table]`.`lid`, `[table]`.`pic`, '[link]' as `link` FROM `[table]` LEFT JOIN `advert_life` ON `[table]`.id = `advert_life`.news_id WHERE (`advert_life`.`data` <= '".time()."' && `advert_life`.`module` = '[table]' && `[table]`.`stat`='1' && `[table]`.`data`>'".(time(
+    ) - 11 * 24 * 60 * 60)."' && `[table]`.`promo`=1 [used] AND (main_column_pronsk <> 1 AND left_column_pronsk <> 1 AND commerce_column_pronsk_both <> 1))";
+    $endq_adv = "ORDER BY `data` DESC LIMIT 6";
+    $data_adv = getNewsFromLentas($q_adv, $endq_adv);
+
+
+// реклама в самый низ
+    $list = array();
+    if ((int)$data_adv["total"] > 0) {
+        for ($i = 0; $i < $data_adv["total"]; $i++) {
+            @mysql_data_seek($data_adv["result"], $i);
+            $ar = @mysql_fetch_array($data_adv["result"]);
+            $list[] = $ar;
+            $used[ $ar['link'] ][] = $ar['id'];
+        }
+    }
+    if(!empty($list)) {
+        foreach ($list as $ar) {
+         $text .= getAdvRightBlock($ar);
+         $text .= "</div>".$C25;
+     }
+ }
+
+ /*    $text .= "<script src='//mediametrics.ru/partner/inject/inject.js' type='text/javascript' id='MediaMetricsInject' data-width='240' data-height='400' data-img='true' data-imgsize='70' data-type='img' data-bgcolor='FFFFFF' data-bordercolor='000000' data-linkscolor='232323' data-transparent='' data-rows='5' data-inline='' data-font='big' data-fontfamily='roboto' data-border='' data-borderwidth='0' data-alignment='vertical' data-country='ru' data-site='mmet/progorodsamara_ru'> </script>";*/
 
     // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-    return $text;
+
+ return $text;
 }
 
 ?>

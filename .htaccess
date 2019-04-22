@@ -7,10 +7,10 @@ AddDefaultCharset utf-8
 php_value default_charset utf-8
 
 RewriteEngine On
-RewriteCond %{HTTP_HOST} ^www\.progorodsamara\.ru$ [NC]
-RewriteRule ^(.*)$ http://progorodsamara.ru/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^www\.local-sm\.ru$ [NC]
+RewriteRule ^(.*)$ http://local-sm.ru/$1 [R=301,L]
 
-RewriteCond %{HTTP_HOST} ^nsk\.progorodsamara\.ru$ [NC]
+RewriteCond %{HTTP_HOST} ^nsk\.local-sm\.ru$ [NC]
 RewriteRule ^(.*)$ http://progorodnsk.ru/$1 [R=301,L]
 
 Redirect /appmobile.version /appmobile.version.php
