@@ -31,6 +31,7 @@ if ($_SESSION['userrole']>2) {
 			foreach ($GLOBAL['AutoPicPaths'] as $path=>$size) { @unlink($ROOT."/userfiles/".$path."/".$ar['pic']); }
 		}
 		DB("DELETE FROM `".$table."` WHERE (`id` IN (".$items."))");
+		DB("DELETE FROM `advert_life` WHERE (`news_id` IN (".$items."))");
 		DB("DELETE FROM `_widget_pics` WHERE (`pid` IN (".$items.") && `link`='".$link."')");
 		DB("DELETE FROM `_widget_voting` WHERE (`pid` IN (".$items.") && `link`='".$link."')");
 		DB("DELETE FROM `_widget_video` WHERE (`pid` IN (".$items.") && `link`='".$link."')");

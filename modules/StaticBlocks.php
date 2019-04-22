@@ -808,4 +808,27 @@ AND (
     return $text;
 }
 
+                function getAdvRightBlock($ar)
+                {
+                    $text = "";
+                 if ($ar["link"] != "ls") {
+                    if (strpos($ar["link"], "ls") !== false || strpos(
+                        $ar["link"],
+                        "bubr"
+                    ) !== false) {
+                        $rel = "target='_blank' rel='nofollow'";
+                    } else {
+                        $rel = "";
+                    }
+                    if($ar["style"]) $ar["style"] = " ".$ar["style"];
+                    $text .= "<div class='OCNew".$ar["style"]."'>";
+                    $text .= "<a href='/".$ar["link"]."/view/".$ar["id"]."' $rel>";
+                    if ($ar["tavto"] == 1 && $ar["pic"] != "") {
+                        $text .= "<img src='$src/userfiles/picsquare/".$ar["pic"]."'>";
+                    }
+                    $text .= $ar["name"]."</a>";
+                    return $text;
+                }
+            }
+
 ?>
