@@ -553,6 +553,33 @@ body.parentNode.insertBefore(w,body);
 $RENDER .= $GLOBAL["CSSModules"];
 $RENDER .= $antiadblock;
 $RENDER .= $GLOBAL["JSModules"];
+$RENDER .= '<script src="//cdn.alfadart.com/js/libs/alfadart.lib.min.js"></script>
+
+<script>
+
+window.alfadart.prebid.waitForSectionsLoadPrebidAndDisplayAd({
+
+"sectionId": "interscroller",
+
+"bids": [{"bidder":"otm","direct":true, "params":{"tid":"248"}}],
+
+"width": 240,
+
+"height": 400,
+
+"bannerType": "banner_interscroller",
+
+"bannerConfig": {
+
+"height": 100
+
+},
+
+"minCpmValueInRubles": 5.00
+
+});
+
+</script>';
 $RENDER .= '</head>'.$r.'<body>'.$r;
 
 $RENDER .= $DesignHtml.$r;
